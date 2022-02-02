@@ -7,11 +7,15 @@ import com.psdemo.todo.util.ToDoTestRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 
 class ListViewModelTest {
 
-    lateinit var repository: TodoRepository
+    @get:Rule
+    val exceptionRule: ExpectedException = ExpectedException.none()
+    private lateinit var repository: TodoRepository
 
     @Before
     fun setUp(){
@@ -53,6 +57,13 @@ class ListViewModelTest {
 
         assertNotNull(todoCount)
         assertEquals(expected,todoCount)
+    }
 
+    @Test
+    fun test_toggleTodo(){
+        val id = "fake"
+        val model = ListViewModel(repository)
+        exceptionRule.expect(NotImplementedError::class.java)
+        model.toggleTodo(id)
     }
 }
